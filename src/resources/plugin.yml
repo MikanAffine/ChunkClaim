@@ -1,0 +1,10 @@
+name: "ChunkClaim"
+main: "gl.ky.cclaim.Main"
+version: "1"
+authors: [ "Takahashi Kouyou" ]
+description: "chunk claim"
+api-version: "1.16"
+commands:
+  chunkclaim:
+    usage: "ccl"
+    aliases: [ "ccl" ]

@@ -1,0 +1,52 @@
+plugins {
+  id 'org.jetbrains.kotlin.jvm' version '1.7.10'
+  id 'org.jetbrains.kotlin.plugin.serialization' version '1.7.10'
+  id 'com.github.johnrengelman.shadow' version '7.0.0'
+}
+
+group 'gl.ky'
+version '1.0.0'
+
+archivesBaseName = 'ChunkClaim'
+
+repositories {
+  maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
+  mavenCentral()
+  maven { url 'https://hub.spigotmc.org/nexus/content/repositories/public/' }
+}
+
+dependencies {
+  implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.7.10'
+  implementation 'org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.4.0-RC'
+  implementation 'org.jetbrains.kotlinx:kotlinx-serialization-cbor-jvm:1.4.0-RC'
+  compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
+}
+
+sourceSets {
+  main {
+    kotlin {
+      srcDir 'src/code'
+    }
+    resources {
+      srcDir 'src/resources'
+    }
+  }
+}
+
+compileKotlin {
+  kotlinOptions {
+    jvmTarget = "1.8"
+  }
+}
+
+shadowJar {
+  dependencies {
+    include dependency('org.jetbrains.kotlin:kotlin-stdlib:1.7.10')
+    include dependency('org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.4.0-RC')
+    include dependency('org.jetbrains.kotlinx:kotlinx-serialization-cbor-jvm:1.4.0-RC')
+  }
+  relocate 'kotlin', 'gl.ky.cclaim.kt'
+  relocate 'kotlinx', 'gl.ky.cclaim.ktx'
+}
+
+build.dependsOn shadowJar
